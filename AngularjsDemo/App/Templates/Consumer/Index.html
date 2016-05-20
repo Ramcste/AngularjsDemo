@@ -1,0 +1,131 @@
+﻿<br />
+<br />
+<div class="row">
+    <div class="col-md-1">Search:</div>
+    <div class="col-md-3">
+        <input ng-model="searchname" class="form-control" />
+    </div>
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4"></div>
+</div>
+<br />
+<br />
+<div class="divList">
+    <p><b><i>Consumer List</i></b></p>
+    <table class="table table-hover">
+        <tr>
+            <td><b>Id</b></td>
+            <td><b>Consumer Name</b></td>
+            <td><b>Product Name</b></td>
+            <td><b>Consumed Quantity</b></td>
+            <td><b>Amount</b></td>
+            <td><b>Sold Date</b></td>
+            <td><b>Money Paid(or not)</b></td>
+            <td><b>Action</b></td>
+        </tr>
+        <tr ng-repeat="consumer in consumers | filter:searchname ">
+
+            <td>
+                {{$index+1}}
+            </td>
+            <td>
+                {{consumer.consumerName}}
+            </td>
+            <td>
+                {{consumer.productName}}
+            </td>
+            <td>
+                {{consumer.consumedQuantity}}
+            </td>
+            <td>
+                {{consumer.amount}}
+            </td>
+
+            <td>
+                {{consumer.soldDate|date:'MM/dd/yyyy'}}
+            </td>
+
+            <td>
+                <div ng-if="consumer.paid==true">{{"Yes"}}</div>
+                <div ng-if="consumer.paid!=true">{{"No"}}</div>
+            </td>
+
+            <td>
+                <span ng-click="editConsumer(consumer)" class="btn btn-primary">Edit</span>
+                <span ng-click="deleteConsumer(consumer)" class="btn btn-danger">Delete</span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<span ng-click="addConsumerDiv()" class="btn btn-default">
+    Add Consumer
+</span>
+<div ng-show="divConsumer">
+    <p class="divHead"></p>
+
+    <form name="consumerForm" id="consumerForm" class="form-horizontal" novalidate angular-validator>
+
+        <div class="form-group">
+            <b><i>{{Action}} Consumer</i></b>
+        </div>
+
+        <!--<div class="form-group" ng-show="consumerId">
+
+            <label class="form-label"> consumer Id</label>
+            <input type="text" name="id" ng-model="id" class="form-control" placeholder="Id is required." required-message="'consumer Id is required.'" required readonly />
+
+        </div>-->
+
+
+        <div class="form-group">
+
+            <label class="form-label"> Consumer Name</label>
+            <input type="text" name="name" ng-model="consumerName" class="form-control" placeholder="Consumer Name is required." required-message="'Consumer Name is required.'" required />
+
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Product Name</label>
+          <select name="productId" id="productId" ng-options="pro.id as pro.name for pro in products"  ng-model="productId" class="form-control" ng-change="loadProductInfo()">
+              <option value="">Select Project</option>
+          </select>
+
+        </div>
+
+
+        <div class="form-group">
+            <label class="form-label">Quantity</label>
+            <input type="text" name="quantity" ng-model="consumedQuantity" ng-change="calculateAmount()"  class="form-control" placeholder="Quantity is required." required-message="'Quantity is required.'" required />
+
+        </div>
+
+        
+        <div class="form-group">
+            <label class="form-label">Amount</label>
+            <input name="amount" id="amount" ng-model="amount" class="form-control" placeholder="Amount is required." required-message="'Amount is required.'" required>
+
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Bill Payed</label>
+             <select ng-model="paid" ng-options="boolToStrInDropDownPaid(item) for item in [true, false]" class="form-control">
+                 <option value="">Select your status</option>
+               
+             </select>
+
+        </div>
+
+
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-default" value="Save" ng-click="AddUpdateConsumer()"/>
+            <input type="button" class="btn btn-danger" value="Cancel" ng-click="Cancel()" />
+        </div>
+
+        
+    </form>
+
+</div>

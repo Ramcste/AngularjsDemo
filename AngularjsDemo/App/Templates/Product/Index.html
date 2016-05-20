@@ -1,0 +1,102 @@
+﻿<br />
+<br />
+<div class="row">
+    <div class="col-md-1">Search:</div>
+    <div class="col-md-3">
+        <input ng-model="searchname" class="form-control" />
+    </div>
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4"></div>
+</div>
+<br />
+<br />
+<div class="divList">
+    <p><b><i>Product List</i></b></p>
+    <table class="table table-hover">
+        <tr>
+            <td><b>Id</b></td>
+            <td><b>Product Name</b></td>
+            <td><b>Quantity</b></td>
+            <td><b>Unit Price</b></td>
+            <td><b>Supplier Name</b></td>
+            <td><b>Action</b></td>
+        </tr>
+        <tr ng-repeat="product in products | filter:searchname ">
+
+            <td>
+                {{$index+1}}
+            </td>
+            <td>
+                {{product.name}}
+            </td>
+            <td>
+                {{product.quantity}}
+            </td>
+            <td>
+                {{product.unitPrice}}
+            </td>
+            <td>
+                {{product.supplierName}}
+            </td>
+      
+            <td>
+                <span ng-click="editProduct(product)" class="btn btn-primary">Edit</span>
+                <span ng-click="deleteProduct(product)" class="btn btn-danger">Delete</span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<span ng-click="AddProductDiv()"  class="btn btn-default">
+    Add Product
+</span>
+<div ng-show="divProduct">
+    <p class="divHead"></p>
+
+    <form name="productForm" id="productForm" class="form-horizontal"   novalidate angular-validator>
+
+        <div class="form-group">
+            <b><i>{{Action}} Product</i></b>
+        </div>
+
+        <div class="form-group" ng-show="productId">
+
+            <label class="form-label"> Product Id</label>
+            <input type="text" name="id" ng-model="id" class="form-control" placeholder="Id is required." required-message="'Product Id is required.'" required  readonly />
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label"> Product Name</label>
+            <input type="text" name="name" ng-model="name" class="form-control"  placeholder="Product Name is required." required-message="'Product Name is required.'" required />
+    
+        </div>
+        <div class="form-group">
+            <label class="form-label">Quantity</label>
+            <input type="text" name="quantity" ng-model="quantity" class="form-control" placeholder="Quantity is required." required-message="'Quantity is required.'" required/>
+         
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Unit Price</label>
+            <input type="text" name="unitPrice" ng-model="unitPrice" class="form-control" placeholder="Unit Price is required." required-message="'Unit Price is required.'" required/>
+          
+        </div>
+   
+        <div class="form-group">
+            <label class="form-label">Supplier Name</label>
+            <input name="supplierName" id="supplierName" ng-model="supplierName" class="form-control" placeholder="Supplier Name is required." required-message="'Supplier Name is required.'" required>
+          
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-default" value="Save"  ng-click="AddUpdateProduct()" />
+            <input type="button" class="btn btn-danger" value="Cancel" ng-click="Cancel()" />
+        </div>
+
+
+    </form>
+
+</div>
